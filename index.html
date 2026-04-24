@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet Dreams – Boulangerie Artisanale Paris 11ème</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50:  '#fdf8f4',
+              100: '#f5e9d9',
+              200: '#e8cfab',
+              300: '#d4a96a',
+              400: '#c08040',
+              500: '#8B5E3C',
+              600: '#6f4628',
+              700: '#55331a',
+              800: '#3d220f',
+              900: '#271508',
+            },
+            gold: {
+              100: '#fef9e7',
+              200: '#fdeaa8',
+              300: '#f9d262',
+              400: '#f4b942',
+              500: '#D4A017',
+              600: '#a87d10',
+              700: '#7d5c0c',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans:  ['Lato', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #3d220f 0%, #6f4628 40%, #8B5E3C 70%, #D4A017 100%);
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(139,94,60,0.25);
+    }
+
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #D4A017;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .gold-shimmer {
+      background: linear-gradient(90deg, #D4A017, #f4b942, #D4A017);
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes shimmer {
+      to { background-position: 200% center; }
+    }
+
+    .wavy-divider {
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wavy-divider svg {
+      display: block;
+    }
+
+    .testimonial-card {
+      background: linear-gradient(145deg, #fdf8f4, #f5e9d9);
+      border-left: 4px solid #D4A017;
+    }
+
+    .cta-gradient {
+      background: linear-gradient(135deg, #55331a 0%, #8B5E3C 50%, #D4A017 100%);
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #fdf8f4; }
+    ::-webkit-scrollbar-thumb { background: #8B5E3C; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D4A017; }
+  </style>
+</head>
+<body class="bg-brown-50 font-sans text-brown-800 overflow-x-hidden" x-data="{ mobileOpen: false }">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER / NAV
+  ═══════════════════════════════════════════ -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-brown-800/95 backdrop-blur-sm shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+
+        <!-- Logo -->
+        <a href="#accueil" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-full bg-gold-500 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+            <span class="text-brown-800 text-lg font-serif font-bold">SD</span>
+          </div>
+          <span class="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">Sweet Dreams</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#accueil"   class="nav-link text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase transition-colors duration-200">Accueil</a>
+          <a href="#produits"  class="nav-link text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase transition-colors duration-200">Produits</a>
+          <a href="#a-propos"  class="nav-link text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase transition-colors duration-200">À Propos</a>
+          <a href="#avis"      class="nav-link text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase transition-colors duration-200">Avis</a>
+          <a href="#contact"   class="nav-link text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase transition-colors duration-200">Contact</a>
+          <a href="tel:0123456789" class="ml-4 bg-gold-500 hover:bg-gold-400 text-brown-900 font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105">
+            01 23 45 67 89
+          </a>
+        </nav>
+
+        <!-- Mobile Burger -->
+        <button @click="mobileOpen = !mobileOpen" class="md:hidden text-white focus:outline-none p-2">
+          <svg x-show="!mobileOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg x-show="mobileOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4" class="md:hidden bg-brown-900 border-t border-brown-700 pb-4" x-cloak>
+      <div class="flex flex-col px-6 pt-4 space-y-4">
+        <a href="#accueil"  @click="mobileOpen=false" class="text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase py-2 border-b border-brown-700">Accueil</a>
+        <a href="#produits" @click="mobileOpen=false" class="text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase py-2 border-b border-brown-700">Produits</a>
+        <a href="#a-propos" @click="mobileOpen=false" class="text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase py-2 border-b border-brown-700">À Propos</a>
+        <a href="#avis"     @click="mobileOpen=false" class="text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase py-2 border-b border-brown-700">Avis</a>
+        <a href="#contact"  @click="mobileOpen=false" class="text-brown-200 hover:text-gold-400 font-sans text-sm tracking-widest uppercase py-2 border-b border-brown-700">Contact</a>
+        <a href="tel:0123456789" class="mt-2 bg-gold-500 text-brown-900 font-bold text-center py-3 rounded-full">01 23 45 67 89</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section id="accueil" class="hero-gradient min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20">
+
+    <!-- Decorative circles -->
+    <div class="absolute top-20 left-10 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-brown-300/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brown-700/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Decorative pastry icons -->
+    <div class="absolute top-32 right-16 text-6xl opacity-20 rotate-12 pointer-events-none select-none">🥐</div>
+    <div class="absolute bottom-36 left-16 text-5xl opacity-20 -rotate-12 pointer-events-none select-none">🎂</div>
+    <div class="absolute top-1/2 right-8 text-4xl opacity-15 rotate-6 pointer-events-none select-none">🍰</div>
+    <div class="absolute top-40 left-1/4 text-3xl opacity-15 -rotate-6 pointer-events-none select-none">🥧</div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-400/40 text-gold-300 text-xs font-sans tracking-widest uppercase px-5 py-2 rounded-full mb-8">
+        <span>✦</span>
+        <span>Boulangerie Artisanale · Paris 11ème</span>
+        <span>✦</span>
+      </div>
+
+      <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-black text-white mb-4 leading-tight">
+        Sweet
+        <span class="gold-shimmer block sm:inline"> Dreams</span>
+      </h1>
+
+      <p class="font-serif text-xl sm:text-2xl lg:text-3xl text-brown-200 italic mb-4 font-light">
+        L'artisanat boulanger au cœur de Paris
+      </p>
+
+      <p class="font-sans text-brown-300 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+        Croissants dorés, pains au chocolat fondants, tartes aux fruits fraîches et gâteaux personnalisés — créés avec passion et savoir-faire artisanal.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#produits" class="bg-gold-500 hover:bg-gold-400 text-brown-900 font-bold font-sans text-sm tracking-widest uppercase px-8 py-4 rounded-full transition-all duration-300 hover:shadow-2xl hover:shadow-gold-500/30 hover:scale-105">
+          Découvrir nos créations
+        </a>
+        <a href="#contact" class="border-2 border-gold-400/60 hover:border-gold-400 text-gold-300 hover:text-gold-200 font-sans text-sm tracking-widest uppercase px-8 py-4 rounded-full transition-all duration-300 hover:bg-gold-500/10">
+          Nous contacter
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="mt-16 grid grid-cols-3 gap-6 sm:gap-10 max-w-lg mx-auto">
+        <div class="text-center">
+          <div class="font-serif text-3xl sm:text-4xl font-bold text-gold-400">100%</div>
+          <div class="font-sans text-brown-300 text-xs tracking-wider uppercase mt-1">Artisanal</div>
+        </div>
+        <div class="text-center border-x border-brown-600">
+          <div class="font-serif text-3xl sm:text-4xl font-bold text-gold-400">Paris</div>
+          <div class="font-sans text-brown-300 text-xs tracking-wider uppercase mt-1">11ème</div>
+        </div>
+        <div class="text-center">
+          <div class="font-serif text-3xl sm:text-4xl font-bold text-gold-400">♥</div>
+          <div class="font-sans text-brown-300 text-xs tracking-wider uppercase mt-1">Fait maison</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom wave -->
+    <div class="wavy-divider absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#fdf8f4"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PRODUCTS
+  ═══════════════════════════════════════════ -->
+  <section id="produits" class="py-24 bg-brown-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section header -->
+      <div class="text-center mb-16 fade-up">
+        <span class="inline-block text-gold-500 font-sans text-xs tracking-widest uppercase font-bold mb-3">✦ Nos Spécialités ✦</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-brown-800 mb-4">Nos Créations Artisanales</h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-brown-500 to-gold-500 mx-auto mb-6 rounded-full"></div>
+        <p class="font-sans text-brown-600 max-w-xl mx-auto text-base leading-relaxed">
+          Chaque pièce est préparée chaque matin avec des ingrédients soigneusement sélectionnés.
+        </p>
+      </div>
+
+      <!-- Product cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <!-- Croissant -->
+        <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md border border-brown-100 fade-up">
+          <div class="h-48 bg-gradient-to-br from-gold-200 to-brown-200 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-gold-300/30 to-brown-400/20"></div>
+            <span class="text-8xl relative z-10 drop-shadow-lg">🥐</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-2 h-2 rounded-full bg-gold-500"></div>
+              <span class="font-sans text-xs text-gold-600 tracking-widest uppercase font-bold">Viennoiserie</span>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-brown-800 mb-2">Croissant</h3>
+            <p class="font-sans text-brown-500 text-sm leading-relaxed">
+              Notre croissant artisanal, au feuilletage délicat et à la pâte beurrée, dorée à la perfection chaque matin.
+            </p>
+            <div class="mt-4 pt-4 border-t border-brown-100 flex items-center gap-2 text-gold-500">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="font-sans text-xs text-brown-400">Fait maison chaque jour</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pain au chocolat -->
+        <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md border border-brown-100 fade-up" style="transition-delay:0.1s">
+          <div class="h-48 bg-gradient-to-br from-brown-200 to-brown-300 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-brown-300/30 to-brown-600/20"></div>
+            <span class="text-8xl relative z-10 drop-shadow-lg">🍫</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-2 h-2 rounded-full bg-gold-500"></div>
+              <span class="font-sans text-xs text-gold-600 tracking-widest uppercase font-bold">Viennoiserie</span>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-brown-800 mb-2">Pain au Chocolat</h3>
+            <p class="font-sans text-brown-500 text-sm leading-relaxed">
+              Feuilleté croustillant aux couches de pâte légère enveloppant de généreux bâtons de chocolat fondant.
+            </p>
+            <div class="mt-4 pt-4 border-t border-brown-100 flex items-center gap-2 text-gold-500">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="font-sans text-xs text-brown-400">Chocolat sélectionné</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarte aux fruits -->
+        <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md border border-brown-100 fade-up" style="transition-delay:0.2s">
+          <div class="h-48 bg-gradient-to-br from-gold-100 to-brown-100 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-gold-200/30 to-brown-200/20"></div>
+            <span class="text-8xl relative z-10 drop-shadow-lg">🥧</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-2 h-2 rounded-full bg-gold-500"></div>
+              <span class="font-sans text-xs text-gold-600 tracking-widest uppercase font-bold">Pâtisserie</span>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-brown-800 mb-2">Tartes aux Fruits</h3>
+            <p class="font-sans text-brown-500 text-sm leading-relaxed">
+              Fond de tarte sablé et crème pâtissière onctueuse, garni de fruits frais de saison pour un éclat de saveurs.
+            </p>
+            <div class="mt-4 pt-4 border-t border-brown-100 flex items-center gap-2 text-gold-500">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="font-sans text-xs text-brown-400">Fruits frais de saison</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gâteaux personnalisés -->
+        <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-md border border-brown-100 fade-up" style="transition-delay:0.3s">
+          <div class="h-48 bg-gradient-to-br from-brown-100 to-gold-200 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-brown-200/30 to-gold-300/20"></div>
+            <span class="text-8xl relative z-10 drop-shadow-lg">🎂</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-2 h-2 rounded-full bg-gold-500"></div>
+              <span class="font-sans text-xs text-gold-600 tracking-widest uppercase font-bold">Sur Commande</span>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-brown-800 mb-2">Gâteaux Personnalisés</h3>
+            <p class="font-sans text-brown-500 text-sm leading-relaxed">
+              Créations uniques sur mesure pour vos événements — anniversaires, mariages, célébrations — réalisées selon vos désirs.
+            </p>
+            <div class="mt-4 pt-4 border-t border-brown-100 flex items-center gap-2 text-gold-500">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <span class="font-sans text-xs text-brown-400">Commande personnalisée</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       WAVY DIVIDER
+  ═══════════════════════════════════════════ -->
+  <div class="wavy-divider bg-brown-50">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="#3d220f"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       ABOUT
+  ═══════════════════════════════════════════ -->
+  <section id="a-propos" class="py-24 bg-brown-800 relative overflow-hidden">
+
+    <!-- Decorative elements -->
+    <div class="absolute top-0 left-0 w-80 h-80 bg-gold-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-brown-600/30 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: Text -->
+        <div class="fade-up">
+          <span class="inline-block text-gold-400 font-sans text-xs tracking-widest uppercase font-bold mb-4">✦ Notre Histoire ✦</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+            L'artisanat au<br/>
+            <span class="text-gold-400">cœur de Paris</span>
+          </h2>
+          <div class="w-16 h-1 bg-gradient-to-r from-gold-500 to-brown-400 rounded-full mb-8"></div>
+
+          <div class="space-y-5 font-sans text-brown-200 text-base leading-relaxed">
+            <p>
+              Sweet Dreams est une boulangerie artisanale nichée au cœur du Paris 11ème, dédiée à l'art de la viennoiserie et de la pâtisserie française.
+            </p>
+            <p>
+              Nos artisans créent chaque jour avec passion des croissants, pains au chocolat, tartes aux fruits et gâteaux personnalisés, en respectant les traditions boulangères les plus authentiques.
+            </p>
+            <p>
+              Chaque création est pensée pour éveiller les sens et apporter un moment de douceur exceptionnel dans votre quotidien parisien.
+            </p>
+          </div>
+
+          <div class="mt-10 flex items-center gap-6">
+            <a href="tel:0123456789" class="flex items-center
